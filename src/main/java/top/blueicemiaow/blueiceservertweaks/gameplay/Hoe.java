@@ -3,20 +3,26 @@ package top.blueicemiaow.blueiceservertweaks.gameplay;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
+import top.blueicemiaow.blueiceservertweaks.BlueIceServerTweaks;
 import top.blueicemiaow.blueiceservertweaks.api.Config;
 import top.blueicemiaow.blueiceservertweaks.tools.ConfigHelper;
 
 public class Hoe {
-    public static boolean harvestCrop(Player entity, Level level, BlockPos pos) {
-        if (ConfigHelper.get(Config.hoe_harvest_crop) && check(entity, level)) {
+    public static InteractionResult harvestCrop(Player entity, Level level, InteractionHand hand, BlockHitResult hitResult) {
+        if (ConfigHelper.get(Config.hoe_harvest_crop) && check(entity, level, hand)) {
             ServerLevel world = (ServerLevel) level;
+            BlockPos pos = hitResult.getBlockPos();
             BlockState state = world.getBlockState(pos);
             Block block = state.getBlock();
             if (block instanceof CropBlock crop && crop.isMaxAge(state)) {
@@ -25,15 +31,16 @@ public class Hoe {
                 player.getInventory().setChanged();
                 world.levelEvent(2001, pos, Block.getId(state));
                 world.setBlock(pos, state.setValue(crop instanceof BeetrootBlock ? BeetrootBlock.AGE : CropBlock.AGE, 0), 2);
-                return true;
+                return InteractionResult.SUCCESS;
             }
         }
-        return false;
+        return InteractionResult.PASS;
     }
 
-    public static boolean recycleEye(Player entity, Level level, BlockPos pos) {
-        if (ConfigHelper.get(Config.hoe_recycle_ender_eye) && check(entity, level)) {
+    public static InteractionResult recycleEye(Player entity, Level level, InteractionHand hand, BlockHitResult hitResult) {
+        if (ConfigHelper.get(Config.hoe_recycle_ender_eye) && check(entity, level, hand)) {
             ServerLevel world = (ServerLevel) level;
+            BlockPos pos = hitResult.getBlockPos();
             BlockState frame = world.getBlockState(pos);
             if (frame.is(Blocks.END_PORTAL_FRAME) && frame.getValue(EndPortalFrameBlock.HAS_EYE)) {
                 ServerPlayer player = (ServerPlayer) entity;
@@ -42,13 +49,33 @@ public class Hoe {
                 eye.setCount(1);
                 player.addItem(eye);
                 player.getInventory().setChanged();
-                return true;
+                return InteractionResult.SUCCESS;
             }
         }
-        return false;
+        return InteractionResult.PASS;
     }
 
-    public static boolean check(Player entity, Level level) {
-        return entity instanceof ServerPlayer player && level instanceof ServerLevel && player.isShiftKeyDown() && player.getMainHandItem().is(ItemTags.HOES);
+    public static InteractionResult collectBlock(Player entity, Level level, InteractionHand hand, BlockHitResult hitResult) {
+        if (ConfigHelper.get(Config.hoe_collect_block) && check(entity, level, hand)) {
+            ServerLevel world = (ServerLevel) level;
+            BlockPos pos = hitResult.getBlockPos();
+            BlockState state = world.getBlockState(pos);
+            if (state.is(BlueIceServerTweaks.COLLECTABLE)) {
+                ServerPlayer player = (ServerPlayer) entity;
+                if (state.is(BlockTags.SHULKER_BOXES)) {
+                    Block.getDrops(state, world, pos, world.getBlockEntity(pos)).forEach(player::addItem);
+                } else {
+                    player.addItem(state.getBlock().getCloneItemStack(world, pos, state));
+                }
+                player.getInventory().setChanged();
+                world.removeBlock(pos, false);
+                return InteractionResult.SUCCESS;
+            }
+        }
+        return InteractionResult.PASS;
+    }
+
+    public static boolean check(Player entity, Level level, InteractionHand hand) {
+        return entity instanceof ServerPlayer player && level instanceof ServerLevel && player.isShiftKeyDown() && player.getItemInHand(hand).is(ItemTags.HOES);
     }
 }

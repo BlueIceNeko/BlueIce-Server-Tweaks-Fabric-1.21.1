@@ -16,8 +16,8 @@
   ],
   "contact": {
     "homepage": "https://modrinth.com/mod/blueice-server-tweaks",
-    "sources": "https://github.com/BlueIceNeko/BlueIce-Server-Tweaks",
-    "issues": "https://github.com/BlueIceNeko/BlueIce-Server-Tweaks/issues"
+    "sources": "https://github.com/BlueIceNeko/BlueIce-Server-Tweaks-Fabric-1.21.1",
+    "issues": "https://github.com/BlueIceNeko/BlueIce-Server-Tweaks-Fabric-1.21.1/issues"
   },
   "license": "GPL-3.0-only",
   "icon": "assets/blueice_server_tweaks/icon.png",

@@ -34,8 +34,11 @@ public class Config {
     public static final String larger_beacon_range = "larger_beacon_range";
     public static final String armor_stand_show_arms = "armor_stand_show_arms";
     public static final String powerful_bone_meal = "powerful_bone_meal";
+    public static final String bonemealable_cactus = "bonemealable_cactus";
+    public static final String bonemealable_sugar_cane = "bonemealable_sugar_cane";
     public static final String hoe_harvest_crop = "hoe_harvest_crop";
     public static final String hoe_recycle_ender_eye = "hoe_recycle_ender_eye";
+    public static final String hoe_collect_block = "hoe_collect_block";
     public static final String permission_system = "permission_system";
     public static final String sudo = "sudo";
 
@@ -71,8 +74,11 @@ public class Config {
                     Map.entry(larger_beacon_range, false),
                     Map.entry(armor_stand_show_arms, false),
                     Map.entry(powerful_bone_meal, false),
+                    Map.entry(bonemealable_cactus, false),
+                    Map.entry(bonemealable_sugar_cane, false),
                     Map.entry(hoe_harvest_crop, false),
                     Map.entry(hoe_recycle_ender_eye, false),
+                    Map.entry(hoe_collect_block, false),
                     Map.entry(permission_system, true),
                     Map.entry(sudo, true)
             )),

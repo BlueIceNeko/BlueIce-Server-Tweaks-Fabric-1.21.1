@@ -9,8 +9,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.effect.MobEffect;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -19,7 +19,7 @@ import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.item.component.SuspiciousStewEffects;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
 import top.blueicemiaow.blueiceservertweaks.api.Config;
 import top.blueicemiaow.blueiceservertweaks.api.Lists;
 import top.blueicemiaow.blueiceservertweaks.tools.ConfigHelper;
@@ -28,7 +28,8 @@ import java.util.Arrays;
 import java.util.Optional;
 
 public class FletchingTable {
-    public static boolean setStew(Player entity, Level level, BlockPos pos) {
+    public static InteractionResult setStew(Player entity, Level level, InteractionHand hand, BlockHitResult hitResult) {
+        BlockPos pos = hitResult.getBlockPos();
         if (ConfigHelper.get(Config.fletching_table_set_stew) && check(entity, level, pos)) {
             ServerPlayer player = (ServerPlayer) entity;
             ItemStack mainHand = player.getMainHandItem().copy();
@@ -50,17 +51,18 @@ public class FletchingTable {
                                 bottle.setCount(1);
                                 player.setItemInHand(InteractionHand.OFF_HAND, bottle);
                                 player.getInventory().setChanged();
-                                return true;
+                                return InteractionResult.SUCCESS;
                             }
                         }
                     }
                 }
             }
         }
-        return false;
+        return InteractionResult.PASS;
     }
 
-    public static boolean tipArrow(Player entity, Level level, BlockPos pos) {
+    public static InteractionResult tipArrow(Player entity, Level level, InteractionHand hand, BlockHitResult hitResult) {
+        BlockPos pos = hitResult.getBlockPos();
         if (ConfigHelper.get(Config.fletching_table_tip_arrow) && check(entity, level, pos)) {
             ServerPlayer player = (ServerPlayer) entity;
             ItemStack mainHand = player.getMainHandItem().copy();
@@ -75,21 +77,22 @@ public class FletchingTable {
                     bottle.setCount(1);
                     player.setItemInHand(InteractionHand.OFF_HAND, bottle);
                     player.getInventory().setChanged();
-                    return true;
+                    return InteractionResult.SUCCESS;
                 } else if (offHand.is(Items.GLOWSTONE_DUST)) {
                     ItemStack arrow = new ItemStack(Items.SPECTRAL_ARROW);
                     arrow.setCount(mainHand.getCount());
                     player.setItemInHand(InteractionHand.MAIN_HAND, arrow);
                     player.getOffhandItem().shrink(1);
                     player.getInventory().setChanged();
-                    return true;
+                    return InteractionResult.SUCCESS;
                 }
             }
         }
-        return false;
+        return InteractionResult.PASS;
     }
 
-    public static boolean modifyCrossbow(Player entity, Level level, BlockPos pos) {
+    public static InteractionResult modifyCrossbow(Player entity, Level level, InteractionHand hand, BlockHitResult hitResult) {
+        BlockPos pos = hitResult.getBlockPos();
         if (check(entity, level, pos)) {
             ServerPlayer player = (ServerPlayer) entity;
             if (player.getMainHandItem().is(Items.CROSSBOW)) {
@@ -101,18 +104,18 @@ public class FletchingTable {
                     rod.setCount(1);
                     player.addItem(rod);
                     player.getInventory().setChanged();
-                    return true;
+                    return InteractionResult.SUCCESS;
                 }
                 if (ConfigHelper.get(Config.fletching_table_assemble_barrel) && player.getOffhandItem().is(Items.LIGHTNING_ROD) && !player.isShiftKeyDown() && !barrel.getBoolean("with_barrel")) {
                     barrel.putBoolean("with_barrel", true);
                     player.getMainHandItem().set(DataComponents.CUSTOM_DATA, CustomData.of(barrel));
                     player.getOffhandItem().shrink(1);
                     player.getInventory().setChanged();
-                    return true;
+                    return InteractionResult.SUCCESS;
                 }
             }
         }
-        return false;
+        return InteractionResult.PASS;
     }
 
     public static boolean check(Player entity, Level level, BlockPos pos) {

@@ -28,6 +28,10 @@ public class TranslationHelper {
                 new String[] {"en_us", "zh_cn"},
                 new String[] {"Tick operations registered.", "刻操作已注册。"}
         ));
+        add("register_post", new Translation(
+                new String[] {"en_us", "zh_cn"},
+                new String[] {"Post operations registered.", "事务后操作已注册。"}
+        ));
 
         // Bist
         add("set", new Translation(
@@ -37,6 +41,10 @@ public class TranslationHelper {
         add("update", new Translation(
                 new String[] {"en_us", "zh_cn"},
                 new String[] {" updated config.", "已更新配置。"}
+        ));
+        add("get", new Translation(
+                new String[] {"en_us", "zh_cn"},
+                new String[] {" now is: ", "现在是："}
         ));
         add("require_restart", new Translation(
                 new String[] {"en_us", "zh_cn"},
@@ -284,6 +292,14 @@ public class TranslationHelper {
                 new String[] {"en_us", "zh_cn"},
                 new String[] {"More powerful bone meal", "更强大的骨粉"}
         ));
+        add(Config.bonemealable_cactus, new Translation(
+                new String[] {"en_us", "zh_cn"},
+                new String[] {"Bone meal can perform on cactus", "骨粉可催熟仙人掌"}
+        ));
+        add(Config.bonemealable_sugar_cane, new Translation(
+                new String[] {"en_us", "zh_cn"},
+                new String[] {"Bone meal can perform on sugar cane", "骨粉可催熟甘蔗"}
+        ));
         add(Config.hoe_harvest_crop, new Translation(
                 new String[] {"en_us", "zh_cn"},
                 new String[] {"Crop can be harvested using hoes", "作物可用锄收获"}
@@ -291,6 +307,10 @@ public class TranslationHelper {
         add(Config.hoe_recycle_ender_eye, new Translation(
                 new String[] {"en_us", "zh_cn"},
                 new String[] {"Eye of ender can be recycled using hoes", "末影之眼可用锄回收"}
+        ));
+        add(Config.hoe_collect_block, new Translation(
+                new String[] {"en_us", "zh_cn"},
+                new String[] {"Specified block can be collected using hoes", "特定方块可用锄收集"}
         ));
         add(Config.permission_system, new Translation(
                 new String[] {"en_us", "zh_cn"},

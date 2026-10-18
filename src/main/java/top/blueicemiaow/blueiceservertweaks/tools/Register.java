@@ -5,11 +5,11 @@ import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerWorldEvents;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
-import net.minecraft.world.InteractionResult;
 import top.blueicemiaow.blueiceservertweaks.api.Config;
 import top.blueicemiaow.blueiceservertweaks.commands.lvl0.*;
 import top.blueicemiaow.blueiceservertweaks.commands.lvl2.*;
 import top.blueicemiaow.blueiceservertweaks.commands.lvl3.*;
+import top.blueicemiaow.blueiceservertweaks.gameplay.BoneMeal;
 import top.blueicemiaow.blueiceservertweaks.gameplay.FletchingTable;
 import top.blueicemiaow.blueiceservertweaks.gameplay.Hoe;
 
@@ -18,7 +18,7 @@ public class Register {
         // OP level 3
         CommandRegistrationCallback.EVENT.register(BIST::register);
         CommandRegistrationCallback.EVENT.register(GetInfos::register);
-        CommandRegistrationCallback.EVENT.register(Logger::register);
+        CommandRegistrationCallback.EVENT.register(LoggerCommand::register);
         CommandRegistrationCallback.EVENT.register(SetPermission::register);
 
         //OP level 2
@@ -42,15 +42,17 @@ public class Register {
     }
 
     public static void events() {
-        UseBlockCallback.EVENT.register((player, level, hand, hitResult) -> hand == player.getUsedItemHand() && FletchingTable.tipArrow(player, level, hitResult.getBlockPos()) ? InteractionResult.SUCCESS : InteractionResult.PASS);
-        UseBlockCallback.EVENT.register((player, level, hand, hitResult) -> hand == player.getUsedItemHand() && FletchingTable.setStew(player, level, hitResult.getBlockPos()) ? InteractionResult.SUCCESS : InteractionResult.PASS);
-        UseBlockCallback.EVENT.register((player, level, hand, hitResult) -> hand == player.getUsedItemHand() && FletchingTable.modifyCrossbow(player, level, hitResult.getBlockPos()) ? InteractionResult.SUCCESS : InteractionResult.PASS);
-        UseBlockCallback.EVENT.register((player, level, hand, hitResult) -> hand == player.getUsedItemHand() && Hoe.harvestCrop(player, level, hitResult.getBlockPos()) ? InteractionResult.SUCCESS : InteractionResult.PASS);
-        UseBlockCallback.EVENT.register((player, level, hand, hitResult) -> hand == player.getUsedItemHand() && Hoe.recycleEye(player, level, hitResult.getBlockPos()) ? InteractionResult.SUCCESS : InteractionResult.PASS);
+        UseBlockCallback.EVENT.register(FletchingTable::tipArrow);
+        UseBlockCallback.EVENT.register(FletchingTable::setStew);
+        UseBlockCallback.EVENT.register(FletchingTable::modifyCrossbow);
+        UseBlockCallback.EVENT.register(Hoe::harvestCrop);
+        UseBlockCallback.EVENT.register(Hoe::recycleEye);
+        UseBlockCallback.EVENT.register(Hoe::collectBlock);
+        UseBlockCallback.EVENT.register(BoneMeal::perform);
     }
 
     public static void tick() {
-        ServerTickEvents.END_WORLD_TICK.register(K::tick);
+        ServerTickEvents.END_WORLD_TICK.register(Tick::tick);
     }
 
     public static void post() {
