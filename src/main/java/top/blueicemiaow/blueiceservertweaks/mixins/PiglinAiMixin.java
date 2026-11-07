@@ -11,8 +11,8 @@ import net.minecraft.world.item.armortrim.ArmorTrim;
 import net.minecraft.world.item.armortrim.TrimMaterial;
 import net.minecraft.world.item.armortrim.TrimMaterials;
 import org.spongepowered.asm.mixin.Mixin;
-import top.blueicemiaow.blueiceservertweaks.BlueIceServerTweaks;
 import top.blueicemiaow.blueiceservertweaks.api.Config;
+import top.blueicemiaow.blueiceservertweaks.api.Tags;
 import top.blueicemiaow.blueiceservertweaks.tools.ConfigHelper;
 
 import java.util.Optional;
@@ -23,7 +23,7 @@ public abstract class PiglinAiMixin {
     private static boolean isWearingGold(LivingEntity entity, Operation<Boolean> original) {
         if (ConfigHelper.get(Config.enhanced_is_wearing_gold)) {
             for (ItemStack itemStack : entity.getArmorSlots()) {
-                if (itemStack.is(BlueIceServerTweaks.PIGLIN_SAFE_ARMOR)) {
+                if (itemStack.is(Tags.PIGLIN_SAFE_ARMOR)) {
                     return true;
                 } else {
                     ArmorTrim trim = itemStack.get(DataComponents.TRIM);

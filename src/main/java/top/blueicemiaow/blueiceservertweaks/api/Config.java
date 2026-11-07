@@ -1,5 +1,8 @@
 package top.blueicemiaow.blueiceservertweaks.api;
 
+import net.minecraft.server.level.ServerLevel;
+import top.blueicemiaow.blueiceservertweaks.tools.Post;
+
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -16,12 +19,15 @@ public class Config {
 
     public static final String enhanced_can_disable_shield = "enhanced_can_disable_shield";
     public static final String enhanced_is_wearing_gold = "enhanced_is_wearing_gold";
+    public static final String enhanced_enchanting_exclusion = "enhanced_enchanting_exclusion";
     public static final String prevent_rotten_flesh_drop = "prevent_rotten_flesh_drop";
+    public static final String prevent_poisonous_potato_drop = "prevent_poisonous_potato_drop";
     public static final String prevent_nether_portal_break = "prevent_nether_portal_break";
     public static final String prevent_copper_oxidize = "prevent_copper_oxidize";
     public static final String prevent_farmland_be_trampled = "prevent_farmland_be_trampled";
     public static final String prevent_respawn_point_produce_fire = "prevent_respawn_point_produce_fire";
     public static final String remove_enchantment_power_limit = "remove_enchantment_power_limit";
+    public static final String remove_lead_length_limit = "remove_lead_length_limit";
     public static final String remove_crop_light_restriction = "remove_crop_light_restriction";
     public static final String remove_player_movement_bound = "remove_player_movement_bound";
     public static final String mining_fatigue_fix = "mining_fatigue_fix";
@@ -39,6 +45,9 @@ public class Config {
     public static final String hoe_harvest_crop = "hoe_harvest_crop";
     public static final String hoe_recycle_ender_eye = "hoe_recycle_ender_eye";
     public static final String hoe_collect_block = "hoe_collect_block";
+    public static final String tnt_arrow = "tnt_arrow";
+    public static final String fire_charge_arrow = "fire_charge_arrow";
+    public static final String ender_pearl_arrow = "ender_pearl_arrow";
     public static final String permission_system = "permission_system";
     public static final String sudo = "sudo";
 
@@ -47,21 +56,29 @@ public class Config {
             sudo
     ));
 
-    public static final HashSet<String> hasPost = new HashSet<>(Set.of(
-            villager_major_positive_fix,
-            debug_gamerule
+    public static final HashMap<String, PostOperation> posts = new HashMap<>(Map.ofEntries(
+            Map.entry(villager_major_positive_fix, Post::majorPositive),
+            Map.entry(debug_gamerule, Post::debugGamerule)
     ));
+
+    @FunctionalInterface
+    public interface PostOperation {
+        void run(ServerLevel level, boolean enabled);
+    }
 
     public static final Config defaultConfig = new Config(
             new HashMap<>(Map.ofEntries(
                     Map.entry(enhanced_can_disable_shield, false),
                     Map.entry(enhanced_is_wearing_gold, false),
+                    Map.entry(enhanced_enchanting_exclusion, false),
                     Map.entry(prevent_rotten_flesh_drop, false),
+                    Map.entry(prevent_poisonous_potato_drop, false),
                     Map.entry(prevent_nether_portal_break, false),
                     Map.entry(prevent_copper_oxidize, false),
                     Map.entry(prevent_farmland_be_trampled, false),
                     Map.entry(prevent_respawn_point_produce_fire, false),
                     Map.entry(remove_enchantment_power_limit, false),
+                    Map.entry(remove_lead_length_limit, false),
                     Map.entry(remove_crop_light_restriction, false),
                     Map.entry(remove_player_movement_bound, false),
                     Map.entry(mining_fatigue_fix, false),
@@ -79,6 +96,9 @@ public class Config {
                     Map.entry(hoe_harvest_crop, false),
                     Map.entry(hoe_recycle_ender_eye, false),
                     Map.entry(hoe_collect_block, false),
+                    Map.entry(tnt_arrow, false),
+                    Map.entry(fire_charge_arrow, false),
+                    Map.entry(ender_pearl_arrow, false),
                     Map.entry(permission_system, true),
                     Map.entry(sudo, true)
             )),

@@ -1,9 +1,9 @@
 package top.blueicemiaow.blueiceservertweaks.gameplay;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -12,10 +12,11 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
-import top.blueicemiaow.blueiceservertweaks.BlueIceServerTweaks;
 import top.blueicemiaow.blueiceservertweaks.api.Config;
+import top.blueicemiaow.blueiceservertweaks.api.Tags;
 import top.blueicemiaow.blueiceservertweaks.tools.ConfigHelper;
 
 public class Hoe {
@@ -60,13 +61,15 @@ public class Hoe {
             ServerLevel world = (ServerLevel) level;
             BlockPos pos = hitResult.getBlockPos();
             BlockState state = world.getBlockState(pos);
-            if (state.is(BlueIceServerTweaks.COLLECTABLE)) {
+            if (state.is(Tags.COLLECTABLE)) {
                 ServerPlayer player = (ServerPlayer) entity;
-                if (state.is(BlockTags.SHULKER_BOXES)) {
-                    Block.getDrops(state, world, pos, world.getBlockEntity(pos)).forEach(player::addItem);
-                } else {
-                    player.addItem(state.getBlock().getCloneItemStack(world, pos, state));
+                ItemStack item = state.getBlock().getCloneItemStack(world, pos, state);
+                if (world.getBlockEntity(pos) instanceof BlockEntity blockEntity) {
+                    item.applyComponents(blockEntity.collectComponents());
+                    blockEntity.setComponents(DataComponentMap.EMPTY);
+                    world.removeBlockEntity(pos);
                 }
+                player.addItem(item);
                 player.getInventory().setChanged();
                 world.removeBlock(pos, false);
                 return InteractionResult.SUCCESS;

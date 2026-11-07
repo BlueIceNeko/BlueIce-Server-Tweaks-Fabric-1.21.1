@@ -59,11 +59,8 @@ public class BIST {
         if (Config.requiresRestart.contains(function)) {
             CommandHelper.log(arguments, TranslationHelper.get("require_restart"));
         }
-        if (Config.hasPost.contains(function)) {
-            switch (function) {
-                case Config.villager_major_positive_fix -> Post.majorPositive(enabled);
-                case Config.debug_gamerule -> Post.debugGamerule(arguments.getSource().getLevel(), enabled);
-            }
+        if (Config.posts.get(function) instanceof Config.PostOperation post) {
+            post.run(arguments.getSource().getLevel(), enabled);
         }
     }
 }

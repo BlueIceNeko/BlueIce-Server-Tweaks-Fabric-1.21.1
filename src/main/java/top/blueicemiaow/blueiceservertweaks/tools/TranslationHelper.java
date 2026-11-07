@@ -2,7 +2,7 @@ package top.blueicemiaow.blueiceservertweaks.tools;
 
 import top.blueicemiaow.blueiceservertweaks.BlueIceServerTweaks;
 import top.blueicemiaow.blueiceservertweaks.api.Config;
-import top.blueicemiaow.blueiceservertweaks.api.Lists;
+import top.blueicemiaow.blueiceservertweaks.api.References;
 import top.blueicemiaow.blueiceservertweaks.api.Translation;
 
 public class TranslationHelper {
@@ -220,9 +220,17 @@ public class TranslationHelper {
                 new String[] {"en_us", "zh_cn"},
                 new String[] {"Enhanced piglin safe armor judgment", "增强的防猪灵盔甲判定"}
         ));
+        add(Config.enhanced_enchanting_exclusion, new Translation(
+                new String[] {"en_us", "zh_cn"},
+                new String[] {"Enhanced enchanting exclusion calculation", "增强的附魔台排除计算"}
+        ));
         add(Config.prevent_rotten_flesh_drop, new Translation(
                 new String[] {"en_us", "zh_cn"},
                 new String[] {"Prevent rotten flesh item entity spawn", "阻止腐肉掉落物生成"}
+        ));
+        add(Config.prevent_poisonous_potato_drop, new Translation(
+                new String[] {"en_us", "zh_cn"},
+                new String[] {"Prevent poisonous potato item entity spawn", "阻止毒马铃薯掉落物生成"}
         ));
         add(Config.prevent_nether_portal_break, new Translation(
                 new String[] {"en_us", "zh_cn"},
@@ -243,6 +251,10 @@ public class TranslationHelper {
         add(Config.remove_enchantment_power_limit, new Translation(
                 new String[] {"en_us", "zh_cn"},
                 new String[] {"Remove enchantment power limit", "移除附魔能量上限"}
+        ));
+        add(Config.remove_lead_length_limit, new Translation(
+                new String[] {"en_us", "zh_cn"},
+                new String[] {"Remove lead length limit", "移除拴绳长度上限"}
         ));
         add(Config.remove_crop_light_restriction, new Translation(
                 new String[] {"en_us", "zh_cn"},
@@ -323,24 +335,24 @@ public class TranslationHelper {
     }
 
     public static boolean add(String key, Translation translation) {
-        if (Lists.translations.containsKey(key)) {
+        if (References.translations.containsKey(key)) {
             return false;
         }
-        Lists.translations.put(key, translation);
+        References.translations.put(key, translation);
         return true;
     }
 
     public static boolean del(String key) {
-        if (Lists.translations.containsKey(key)) {
-            Lists.translations.remove(key);
+        if (References.translations.containsKey(key)) {
+            References.translations.remove(key);
             return true;
         }
         return false;
     }
 
     public static String get(String key) {
-        if (Lists.translations.containsKey(key)) {
-            return Lists.translations.get(key).get(BlueIceServerTweaks.config.language);
+        if (References.translations.containsKey(key)) {
+            return References.translations.get(key).get(BlueIceServerTweaks.config.language);
         }
         return key;
     }

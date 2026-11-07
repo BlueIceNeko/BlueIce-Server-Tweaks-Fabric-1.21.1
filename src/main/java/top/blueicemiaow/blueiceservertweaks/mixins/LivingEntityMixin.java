@@ -6,8 +6,8 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
-import top.blueicemiaow.blueiceservertweaks.BlueIceServerTweaks;
 import top.blueicemiaow.blueiceservertweaks.api.Config;
+import top.blueicemiaow.blueiceservertweaks.api.Tags;
 import top.blueicemiaow.blueiceservertweaks.tools.ConfigHelper;
 
 @Mixin(LivingEntity.class)
@@ -17,6 +17,6 @@ public abstract class LivingEntityMixin {
 
     @WrapMethod(method = "canDisableShield")
     private boolean canDisableShield(Operation<Boolean> original) {
-        return ConfigHelper.get(Config.enhanced_can_disable_shield) ? this.getMainHandItem().is(BlueIceServerTweaks.CAN_DISABLE_SHIELD) : original.call();
+        return ConfigHelper.get(Config.enhanced_can_disable_shield) ? this.getMainHandItem().is(Tags.CAN_DISABLE_SHIELD) : original.call();
     }
 }
