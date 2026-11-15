@@ -232,6 +232,10 @@ public class TranslationHelper {
                 new String[] {"en_us", "zh_cn"},
                 new String[] {"Prevent poisonous potato item entity spawn", "阻止毒马铃薯掉落物生成"}
         ));
+        add(Config.prevent_anvil_break, new Translation(
+                new String[] {"en_us", "zh_cn"},
+                new String[] {"Prevent anvil break", "阻止铁砧破碎"}
+        ));
         add(Config.prevent_nether_portal_break, new Translation(
                 new String[] {"en_us", "zh_cn"},
                 new String[] {"Prevent nether portal break", "阻止地狱门破碎"}
@@ -247,6 +251,14 @@ public class TranslationHelper {
         add(Config.prevent_respawn_point_produce_fire, new Translation(
                 new String[] {"en_us", "zh_cn"},
                 new String[] {"Prevent bad respawn point produce fire", "阻止无效重生点起火"}
+        ));
+        add(Config.prevent_template_be_consumed, new Translation(
+                new String[] {"en_us", "zh_cn"},
+                new String[] {"Prevent smithing template be consumed", "阻止锻造模板被消耗"}
+        ));
+        add(Config.remove_anvil_damage_limit, new Translation(
+                new String[] {"en_us", "zh_cn"},
+                new String[] {"Remove anvil damage limit", "移除铁砧伤害上限"}
         ));
         add(Config.remove_enchantment_power_limit, new Translation(
                 new String[] {"en_us", "zh_cn"},
@@ -272,6 +284,10 @@ public class TranslationHelper {
                 new String[] {"en_us", "zh_cn"},
                 new String[] {"Reintroduce old villager major positive calculation", "村民major_positive计算回退"}
         ));
+        add(Config.minecart_drop_fix, new Translation(
+                new String[] {"en_us", "zh_cn"},
+                new String[] {"Reintroduce old minecart drop behavior", "矿车掉落行为回退"}
+        ));
         add(Config.debug_gamerule, new Translation(
                 new String[] {"en_us", "zh_cn"},
                 new String[] {"Game rules and world settings for debugging", "用于调试的游戏规则与世界设置"}
@@ -294,11 +310,15 @@ public class TranslationHelper {
         ));
         add(Config.larger_beacon_range, new Translation(
                 new String[] {"en_us", "zh_cn"},
-                new String[] {"larger beacon effect range", "更大的信标效果范围"}
+                new String[] {"Larger beacon effect range", "更大的信标效果范围"}
         ));
         add(Config.armor_stand_show_arms, new Translation(
                 new String[] {"en_us", "zh_cn"},
                 new String[] {"Armor stand show arms by default", "盔甲架默认展示手臂"}
+        ));
+        add(Config.linear_repair_cost, new Translation(
+                new String[] {"en_us", "zh_cn"},
+                new String[] {"Reduce repair cost to linear increase", "累积惩罚降为线性增加"}
         ));
         add(Config.powerful_bone_meal, new Translation(
                 new String[] {"en_us", "zh_cn"},
@@ -323,6 +343,18 @@ public class TranslationHelper {
         add(Config.hoe_collect_block, new Translation(
                 new String[] {"en_us", "zh_cn"},
                 new String[] {"Specified block can be collected using hoes", "特定方块可用锄收集"}
+        ));
+        add(Config.tnt_arrow, new Translation(
+                new String[] {"en_us", "zh_cn"},
+                new String[] {"TNT as payload of arrows", "TNT作为箭的载荷"}
+        ));
+        add(Config.fire_charge_arrow, new Translation(
+                new String[] {"en_us", "zh_cn"},
+                new String[] {"Fire charge as payload of arrows", "火焰弹作为箭的载荷"}
+        ));
+        add(Config.ender_pearl_arrow, new Translation(
+                new String[] {"en_us", "zh_cn"},
+                new String[] {"Ender pearl as payload of arrows", "末影珍珠作为箭的载荷"}
         ));
         add(Config.permission_system, new Translation(
                 new String[] {"en_us", "zh_cn"},

@@ -25,7 +25,6 @@ public class Fly {
         update(player, enabled);
     }
 
-
     public static void update(ServerPlayer player, boolean enabled) {
         if (!player.isCreative()) {
             player.getAbilities().mayfly = enabled;
